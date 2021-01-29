@@ -93,7 +93,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$500</p>
+                        <p>$<span id="sub-total">250</span></p>
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$50</p>
+                        <p>$<span id="vat-amount" >25</span></p>
                     </div>
                 </div>
                 <hr>
@@ -111,40 +111,58 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$550</p>
+                        <p>$ <span id="total-amount" >550</span></p>
                     </div>
                 </div>
             </div>
             <button class="btn-style">Book Now</button>
         </div>
+        
     </main>
 
     <!--Thank You-->
 
-    <script>
-       
-       
+    <script> 
+        // Mega Bus Count and Price Function--------    
         function handleTicketChange(ticket, isIncrease){
-            let firstClassCount = document.getElementById(ticket + "-class-count");
-             let convertFirstClassCount = parseInt(firstClassCount.value);
-             let TotalCount = convertFirstClassCount;
+            let countInput = document.getElementById(ticket + "-class-count");
+             let convertInput = parseInt(countInput.value);
+             let count = convertInput;
              if(isIncrease == true){
-                TotalCount = convertFirstClassCount + 1;
+                count = convertInput + 1;
              }
-             if(isIncrease == false && convertFirstClassCount > 0){
-                TotalCount = convertFirstClassCount - 1;
+             if(isIncrease == false && convertInput > 0){
+                count = convertInput - 1;
              }
-             firstClassCount.value = TotalCount;
-             let firstClassPrice = TotalCount; 
+             countInput.value = count;
+             let price = 0; 
              if(ticket == "first"){
-                firstClassPrice = TotalCount * 150;
+                price = count * 150;
              }
              if(ticket == "economy"){
-                firstClassPrice = TotalCount * 100;
+                price = count * 100;
              }
-             document.getElementById(ticket + "-class-price").innerText = firstClassPrice + ")";
+            document.getElementById(ticket + "-class-price").innerText = price + ")";
+            ticketCalculator(); 
         }
+        //  Sub Total, Tax and Total Amount Function-----------
+        function ticketCalculator(){
+            let firstClassTicket = getInputValue('first');
+            let economyTicket = getInputValue('economy');
 
+            let subTotal = firstClassTicket * 150 + economyTicket * 100;
+            document.getElementById("sub-total").innerText = subTotal;
+            let vat =Math.round(subTotal * 0.1);
+            document.getElementById("vat-amount").innerText = vat;
+            let total = subTotal + vat;
+            document.getElementById("total-amount").innerText = total;
+        }
+        // Input Value Function---------------
+        function getInputValue(ticket){
+            let firstClassCount = document.getElementById(ticket + "-class-count");
+            let convertFirstClassCount = parseInt(firstClassCount.value);
+            return convertFirstClassCount; 
+        }
         
     </script>
 </body>
