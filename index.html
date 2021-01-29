@@ -37,7 +37,7 @@
         </div>
 
 
-        <div class="booking-form">
+        <div id="first-page" class="booking-form">
             <h3>Explore By Bus</h3>
 
             <div class="inputs">
@@ -64,12 +64,10 @@
             <div class="inputs">
                 <div class="input-group f-class">
                 <div>
-                    <label for="">First Class ($<span id="first-class-price">150)</span></label>
-                    <input id="first-class-count" class="inp-style inp-width" type="number" name="" value="1">
+                    <label for="">First Class ($<span id="first-class-price">0)</span></label>
+                    <input id="first-class-count" class="inp-style inp-width" type="number" name="" value="0">
                 </div>
-                <div class="plus-minus-btn">
-                    <!-- <button id="increase-first-class" class="btn btn-success"><i class="fas fa-plus"></i></button>
-                    <button id="decrease-first-class" class="btn btn-success"><i class="fas fa-minus"></i></button> -->
+                <div class="plus-minus-btn"> 
                     <button onclick="handleTicketChange('first', true);" class="btn btn-success"><i class="fas fa-plus"></i></button>
                     <button onclick="handleTicketChange('first', false);" class="btn btn-success"><i class="fas fa-minus"></i></button>
                     
@@ -77,8 +75,8 @@
             </div>
                 <div class="input-group f-class">
                     <div>
-                        <label for="">Economy ($<span id="economy-class-price" >100)</span> </label>
-                        <input id="economy-class-count" class="inp-style inp-width" type="number" name="" value="1">
+                        <label for="">Economy ($<span id="economy-class-price" >0)</span> </label>
+                        <input id="economy-class-count" class="inp-style inp-width" type="number" name="" value="0">
                     </div>
                     <div class="plus-minus-btn">
                         <button onclick="handleTicketChange('economy', true);" class="btn btn-success"><i class="fas fa-plus"></i></button>
@@ -93,7 +91,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$<span id="sub-total">250</span></p>
+                        <p>$<span id="sub-total">0</span></p>
                     </div>
                 </div>
 
@@ -102,7 +100,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$<span id="vat-amount" >25</span></p>
+                        <p>$<span id="vat-amount" ></span></p>
                     </div>
                 </div>
                 <hr>
@@ -111,14 +109,36 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$ <span id="total-amount" >550</span></p>
+                        <p>$ <span id="total-amount" ></span></p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button onclick="handleBookNow();" class="btn-style">Book Now</button>
         </div>
-        
     </main>
+        <!-- History -->
+        <div id="history">
+             <div class="row">
+                 <div class="col-md-4">
+                    <div class="firstClassDiv status">
+                         <h4>Total First Class sit <span id="firstClass" style="font-size: 30px; font-weight: bold;" ></span></h4>
+                         <h2>Amount $<span id="firstClassAmount"></span></h2> 
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="economyClassDiv status">
+                        <h4>Total Economy sit <span id="economyClass" style="font-size: 30px; font-weight: bold;"></span></h4>
+                         <h2>Amount $<span id="economyAmount"></span></h2> 
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="totalAmountDiv status">
+                        <h4>Total  $<span id="total" style="font-size: 30px; font-weight: bold;"></span><br> With 10% VAT</h4>
+                    </div>
+                </div>
+             </div>
+        </div>
+    
 
     <!--Thank You-->
 
@@ -157,12 +177,34 @@
             let total = subTotal + vat;
             document.getElementById("total-amount").innerText = total;
         }
-        // Input Value Function---------------
+        // Get Input Value Function---------------
         function getInputValue(ticket){
-            let firstClassCount = document.getElementById(ticket + "-class-count");
-            let convertFirstClassCount = parseInt(firstClassCount.value);
-            return convertFirstClassCount; 
+            let countInputValue = document.getElementById(ticket + "-class-count");
+            let convertCountInput = parseInt(countInputValue.value);
+            return convertCountInput; 
+        } 
+        function handleBookNow(){
+            document.getElementById("first-page").style.display = "none";
+            document.body.style.height = "100vh";
+            document.getElementById("history").style.display = "block";
+
+            let first = getInputValue("first"); 
+            document.getElementById("firstClass").innerText ="("+ first + ")";
+            let calculate = first * 150;
+            document.getElementById("firstClassAmount").innerText = calculate;
+
+            let economy = getInputValue("economy"); 
+            document.getElementById("economyClass").innerText ="("+ economy + ")";
+            let economyCalculate = economy * 100;
+            document.getElementById("economyAmount").innerText = economyCalculate;
+            let totalMoney = document.getElementById("total-amount");
+            let convert = parseInt(totalMoney.innerText);
+            document.getElementById("total").innerText = convert;
         }
+        // function handleCompleteAmount(){
+        //     let first = getInputValue(ticket)
+        //     document.getElementById("firstClass").innerText = "firstClass";
+        // }
         
     </script>
 </body>
